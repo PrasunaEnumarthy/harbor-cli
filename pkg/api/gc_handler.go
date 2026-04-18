@@ -56,3 +56,20 @@ func ListGCExecutions(opts ...ListFlags) ([]*models.GCHistory, error) {
 
 	return response.Payload, nil
 }
+
+// GetGCLog fetches the raw text logs for a specific garbage collection execution
+func GetGCLog(id int64) (string, error) {
+	ctx, client, err := utils.ContextWithClient()
+	if err != nil {
+		return "", err
+	}
+
+	response, err := client.GC.GetGCLog(ctx, &gc.GetGCLogParams{
+		GCID: id,
+	})
+	if err != nil {
+		return "", err
+	}
+
+	return response.Payload, nil
+}
