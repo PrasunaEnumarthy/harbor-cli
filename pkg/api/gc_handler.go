@@ -33,3 +33,26 @@ func GetGCSchedule() (*models.GCHistory, error) {
 
 	return response.Payload, nil
 }
+
+// ListGCExecutions fetches the history of Garbage Collection executions
+func ListGCExecutions(opts ...ListFlags) ([]*models.GCHistory, error) {
+	ctx, client, err := utils.ContextWithClient()
+	if err != nil {
+		return nil, err
+	}
+
+	var listFlags ListFlags
+	if len(opts) > 0 {
+		listFlags = opts[0]
+	}
+
+	response, err := client.GC.GetGCHistory(ctx, &gc.GetGCHistoryParams{
+		Page:     &listFlags.Page,
+		PageSize: &listFlags.PageSize,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Payload, nil
+}

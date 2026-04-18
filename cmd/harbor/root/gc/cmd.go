@@ -29,6 +29,7 @@ func GcCommand() *cobra.Command {
 	}
 
 	cmd.AddCommand(GcScheduleCommand())
+	cmd.AddCommand(GcExecutionsCommand())
 
 	return cmd
 }
